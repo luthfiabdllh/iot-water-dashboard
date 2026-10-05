@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { User as UserIcon, Settings, LogOut } from "lucide-react";
+import { User as UserIcon, Settings, LogOut, ChevronDown } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -58,15 +58,25 @@ export function NavUser({
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="flex items-center gap-2 rounded-full p-0.5 outline-none hover:ring-2 hover:ring-primary/20 focus-visible:ring-2 focus-visible:ring-ring transition-all"
+          id="user-menu-trigger"
+          className="flex items-center gap-2 rounded-full border border-border bg-card py-1 pl-1 pr-1 sm:pr-3 outline-none transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
           aria-label={`User menu for ${name}`}
         >
-          <Avatar className="size-8 cursor-pointer border border-border">
+          <Avatar className="size-7 border border-border">
             <AvatarImage src={avatarSrc} alt={name} />
-            <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
+            <AvatarFallback className="bg-lime-900/40 text-lime-300 text-xs font-semibold">
               {initials}
             </AvatarFallback>
           </Avatar>
+          <div className="hidden text-left leading-tight sm:grid">
+            <span className="max-w-28 truncate text-xs font-semibold text-foreground">
+              {name}
+            </span>
+            <span className="text-[10px] capitalize text-muted-foreground">
+              {role}
+            </span>
+          </div>
+          <ChevronDown className="hidden size-3 text-muted-foreground sm:block" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-64 p-2 shadow-lg" sideOffset={8}>

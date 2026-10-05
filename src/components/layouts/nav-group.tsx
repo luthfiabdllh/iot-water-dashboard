@@ -30,6 +30,10 @@ import {
 import { usePermissions } from "@/hooks/use-permissions";
 import type { SidebarNavGroup } from "@/components/layouts/nav-config";
 
+/** Active item = solid pill using the sidebar-primary token. */
+const ACTIVE_ITEM_CLASS =
+  "data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm data-[active=true]:hover:bg-sidebar-primary/90 data-[active=true]:hover:text-sidebar-primary-foreground";
+
 export function NavGroup({ label, items, roles }: SidebarNavGroup) {
   const { hasRole } = usePermissions();
   const { state, isMobile } = useSidebar();
@@ -65,6 +69,7 @@ export function NavGroup({ label, items, roles }: SidebarNavGroup) {
                         item.subItems?.some((sub) => !!sub.isActive)
                       }
                       tooltip={item.title}
+                      className={ACTIVE_ITEM_CLASS}
                     >
                       {item.icon}
                       <span className="sr-only">{item.title}</span>
@@ -120,6 +125,7 @@ export function NavGroup({ label, items, roles }: SidebarNavGroup) {
                     <SidebarMenuButton
                       isActive={item.isActive}
                       tooltip={item.title}
+                      className={ACTIVE_ITEM_CLASS}
                     >
                       {item.icon}
                       <span>{item.title}</span>
@@ -165,6 +171,7 @@ export function NavGroup({ label, items, roles }: SidebarNavGroup) {
                 asChild
                 isActive={item.isActive}
                 tooltip={item.title}
+                className={ACTIVE_ITEM_CLASS}
               >
                 <Link href={item.path}>
                   {item.icon}
