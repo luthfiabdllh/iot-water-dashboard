@@ -152,12 +152,12 @@ export function OperationsDashboard() {
       </div>
 
       {/* Main canvas */}
-      <Card className="relative min-h-[560px] flex-1 gap-0 rounded-3xl p-4 md:p-6">
+      <Card className="relative min-h-140 flex-1 gap-0 rounded-3xl p-4 md:p-6">
         <FieldMap showRoutes={showRoutes} zoom={zoom} />
 
         {/* Telemetry card */}
         {cardOpen ? (
-          <Card className="relative z-10 w-full gap-4 rounded-2xl bg-popover/90 backdrop-blur-xl sm:w-[400px]">
+          <Card className="relative z-10 w-full gap-4 rounded-2xl bg-popover/90 backdrop-blur-xl sm:w-100">
             <CardHeader className="grid-cols-[1fr_auto]">
               <div className="flex items-center gap-3">
                 <div className="flex size-9 items-center justify-center rounded-lg border bg-muted">
