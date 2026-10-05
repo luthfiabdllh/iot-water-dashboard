@@ -35,7 +35,7 @@ export const useUIStore = create<UIState>()(
       setSidebarOpen: (open) => set({ isSidebarOpen: open }),
 
       // Theme Mode
-      theme: 'system',
+      theme: 'dark',
       setTheme: (theme) => set({ theme }),
 
       // TweakCN Preset

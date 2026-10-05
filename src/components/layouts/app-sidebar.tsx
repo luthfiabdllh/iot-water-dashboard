@@ -4,35 +4,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutGrid,
-  BarChart3,
-  ShoppingCart,
-  FileText,
+  Cpu,
+  Droplets,
   Users,
-  Megaphone,
-  Settings,
-  Plus,
-  Search,
+  Workflow,
+  BarChart3,
   HelpCircle,
+  Settings,
+  PanelLeftClose,
+  Sparkles,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { NavGroup } from "@/components/layouts/nav-group";
-import { LatestChange } from "@/components/layouts/latest-change";
-import type { SidebarNavGroup } from "@/components/layouts/nav-config";
 
 interface AppSidebarProps {
   userName?: string;
@@ -42,177 +29,154 @@ interface AppSidebarProps {
 export function AppSidebar({}: AppSidebarProps = {}) {
   const pathname = usePathname();
 
-  const isRouteActive = (route: string) => {
-    return pathname === `/${route}` || (route === "dashboard" && pathname === "/");
-  };
+  const navItems = [
+    {
+      title: "Dashboard Overview",
+      href: "/dashboard",
+      icon: LayoutGrid,
+      isActive: pathname === "/dashboard" || pathname === "/",
+    },
+    {
+      title: "Sensors & Controllers",
+      href: "/dashboard",
+      icon: Cpu,
+      isActive: false,
+    },
+    {
+      title: "Active Watering & Telemetry",
+      href: "/dashboard",
+      icon: Droplets,
+      isActive: true, // Prominent active highlight as seen in reference design
+    },
+    {
+      title: "Operators & Users",
+      href: "/users",
+      icon: Users,
+      isActive: pathname.startsWith("/users"),
+    },
+    {
+      title: "Irrigation Flow & Automations",
+      href: "/dashboard",
+      icon: Workflow,
+      isActive: false,
+    },
+    {
+      title: "Analytics & History",
+      href: "/dashboard",
+      icon: BarChart3,
+      isActive: false,
+    },
+  ];
 
-  const navGroups: SidebarNavGroup[] = [
+  const bottomItems = [
     {
-      label: "Overview",
-      items: [
-        {
-          title: "Dashboard",
-          path: "/dashboard",
-          icon: <LayoutGrid className="size-4 shrink-0" />,
-          isActive: isRouteActive("dashboard"),
-        },
-        {
-          title: "Sales",
-          path: "/dashboard",
-          icon: <BarChart3 className="size-4 shrink-0" />,
-        },
-      ],
+      title: "Help & Docs",
+      href: "/settings",
+      icon: HelpCircle,
     },
     {
-      label: "Store",
-      items: [
-        {
-          title: "Orders",
-          path: "/dashboard",
-          icon: <ShoppingCart className="size-4 shrink-0" />,
-          subItems: [
-            { title: "All orders", path: "/dashboard" },
-            { title: "Unfulfilled", path: "/dashboard" },
-            { title: "Returns", path: "/dashboard" },
-          ],
-        },
-        {
-          title: "Products",
-          path: "/dashboard",
-          icon: <FileText className="size-4 shrink-0" />,
-          subItems: [
-            { title: "Catalog", path: "/dashboard" },
-            { title: "Inventory", path: "/dashboard" },
-            { title: "Collections", path: "/dashboard" },
-          ],
-        },
-        {
-          title: "Customers",
-          path: "/users",
-          icon: <Users className="size-4 shrink-0" />,
-          isActive: isRouteActive("users"),
-        },
-        {
-          title: "Marketing",
-          path: "/dashboard",
-          icon: <Megaphone className="size-4 shrink-0" />,
-        },
-      ],
+      title: "System Settings",
+      href: "/settings",
+      icon: Settings,
+      isActive: pathname.startsWith("/settings"),
     },
     {
-      label: "Settings",
-      items: [
-        {
-          title: "Store settings",
-          path: "/settings",
-          icon: <Settings className="size-4 shrink-0" />,
-          isActive: isRouteActive("settings") || isRouteActive("profile"),
-          subItems: [
-            { title: "Store profile", path: "/profile" },
-            { title: "Shipping & delivery", path: "/settings" },
-            { title: "Payments", path: "/settings" },
-          ],
-        },
-      ],
+      title: "Collapse Sidebar",
+      href: "#",
+      icon: PanelLeftClose,
+      isAction: true,
     },
   ];
 
   return (
-    <Sidebar collapsible="icon" variant="floating">
-      {/* Brand Header: Efferd */}
-      <SidebarHeader className="h-14 justify-center px-2 transition-all duration-300 ease-in-out">
-        <SidebarMenuButton
-          size="lg"
-          asChild
-          className="hover:bg-transparent justify-start p-0 transition-all duration-300 ease-in-out"
-        >
-          <Link
-            href="/dashboard"
-            className="flex items-center justify-start gap-2.5 group-data-[collapsible=icon]:gap-0 transition-all duration-300 ease-in-out"
-          >
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-foreground text-background transition-transform duration-300 ease-in-out hover:scale-105">
-              <div className="grid grid-cols-2 gap-0.5">
-                <span className="size-1.5 rounded-[1px] bg-background" />
-                <span className="size-1.5 rounded-[1px] bg-background" />
-                <span className="size-1.5 rounded-[1px] bg-background" />
-                <span className="size-1.5 rounded-[1px] bg-background" />
-              </div>
-            </div>
-            <span className="font-semibold text-sm tracking-tight text-foreground transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 max-w-28 opacity-100">
-              Efferd
-            </span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarHeader>
-
-      {/* Main Content */}
-      <SidebarContent className="px-2 transition-all duration-300 ease-in-out">
-        {/* Quick Action + Search button row */}
-        <SidebarGroup className="p-0 mb-3 group-data-[collapsible=icon]:mb-2 transition-all duration-300 ease-in-out">
-          <div className="flex items-center justify-start gap-2 px-0 transition-all duration-300 ease-in-out">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  className="flex-1 justify-start gap-2 bg-foreground text-background hover:bg-foreground/90 font-medium text-xs h-8 rounded-md group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:min-w-8 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:flex-none transition-all duration-300 ease-in-out overflow-hidden"
-                  asChild
-                >
-                  <Link href="/dashboard" className="flex items-center justify-start gap-2">
-                    <Plus className="size-4 shrink-0 transition-transform duration-300 ease-in-out" />
-                    <span className="transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 max-w-28 opacity-100">
-                      Add product
-                    </span>
-                  </Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right">Add product</TooltipContent>
-            </Tooltip>
-            <Button
-              aria-label="Search"
-              size="icon"
-              variant="outline"
-              className="size-8 shrink-0 rounded-md border-border/60 transition-all duration-300 ease-in-out overflow-hidden group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:w-0 group-data-[collapsible=icon]:opacity-0 group-data-[collapsible=icon]:scale-75 group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:border-0 group-data-[collapsible=icon]:pointer-events-none"
-            >
-              <Search className="size-4 text-muted-foreground transition-transform duration-300 ease-in-out" />
-            </Button>
-          </div>
-        </SidebarGroup>
-
-        {/* Navigation Groups */}
-        {navGroups.map((group, index) => (
-          <NavGroup key={`sidebar-group-${index}`} {...group} />
-        ))}
-      </SidebarContent>
-
-      {/* Footer */}
-      <SidebarFooter className="p-2 transition-all duration-300 ease-in-out">
-        <LatestChange
-          badge="UPDATE"
-          title="Smarter shipping quotes"
-          description="Real-time rates at checkout now."
-          readMoreLabel="Changelog"
-          readMoreHref="#"
-        />
-        <SidebarMenu className="mt-2 group-data-[collapsible=icon]:mt-0 transition-all duration-300 ease-in-out">
-          <SidebarMenuItem className="transition-all duration-300 ease-in-out">
-            <SidebarMenuButton
-              asChild
-              tooltip="Seller help"
-              className="text-muted-foreground hover:text-foreground text-xs justify-start transition-all duration-300 ease-in-out"
-              size="sm"
-            >
+    <TooltipProvider delayDuration={150}>
+      <aside
+        id="cockpit-sidebar"
+        aria-label="Operations Sidebar"
+        className="w-16 md:w-[70px] h-[calc(100vh-24px)] md:h-[calc(100vh-32px)] shrink-0 flex flex-col items-center justify-between py-4 px-2 bg-[#14161c] border border-white/[0.08] rounded-2xl md:rounded-3xl shadow-2xl select-none transition-all duration-300 z-30"
+      >
+        {/* Top: Brand Squircle Icon */}
+        <div className="flex flex-col items-center gap-6 w-full">
+          <Tooltip>
+            <TooltipTrigger asChild>
               <Link
-                href="/settings"
-                className="flex items-center justify-start gap-2 group-data-[collapsible=icon]:gap-0 transition-all duration-300 ease-in-out"
+                href="/dashboard"
+                className="size-11 rounded-2xl bg-[#1d2028] border border-white/10 hover:border-amber-400/40 flex items-center justify-center text-amber-400 hover:text-amber-300 transition-all duration-300 hover:scale-105 shadow-inner group relative"
+                aria-label="Sinergi IoT Operations"
               >
-                <HelpCircle className="size-4 shrink-0 transition-transform duration-300 ease-in-out" />
-                <span className="transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap group-data-[collapsible=icon]:max-w-0 group-data-[collapsible=icon]:opacity-0 max-w-28 opacity-100">
-                  Seller help
-                </span>
+                {/* Glowing stylized clover / sprout icon matching reference */}
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute inset-0 bg-amber-400/20 blur-md rounded-full group-hover:bg-amber-400/30 transition-all" />
+                  <Sparkles className="size-5 fill-amber-400 text-amber-400 transition-transform duration-300 group-hover:rotate-12" />
+                </div>
               </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
+            </TooltipTrigger>
+            <TooltipContent side="right" className="bg-[#1f232c] text-white border-white/10">
+              <span className="font-semibold text-xs">Sinergi IoT Watering</span>
+            </TooltipContent>
+          </Tooltip>
+
+          {/* Middle Nav Items */}
+          <nav className="flex flex-col items-center gap-3 w-full" aria-label="Main Navigation">
+            {navItems.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <Tooltip key={`nav-item-${idx}`}>
+                  <TooltipTrigger asChild>
+                    <Link
+                      href={item.href}
+                      className={`relative size-11 rounded-full flex items-center justify-center transition-all duration-200 ${
+                        item.isActive
+                          ? "bg-white text-zinc-950 shadow-lg font-bold scale-105 hover:bg-zinc-100"
+                          : "text-zinc-400 hover:text-white hover:bg-white/[0.08] hover:scale-105"
+                      }`}
+                      aria-current={item.isActive ? "page" : undefined}
+                    >
+                      <Icon className="size-5" />
+                    </Link>
+                  </TooltipTrigger>
+                  <TooltipContent
+                    side="right"
+                    className="bg-[#1f232c] text-white border-white/10 text-xs"
+                  >
+                    {item.title}
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </nav>
+        </div>
+
+        {/* Bottom Nav Items */}
+        <div className="flex flex-col items-center gap-3 w-full">
+          {bottomItems.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <Tooltip key={`bottom-item-${idx}`}>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={item.href}
+                    className={`size-10 rounded-full flex items-center justify-center transition-all duration-200 ${
+                      item.isActive
+                        ? "bg-white text-zinc-950 shadow"
+                        : "text-zinc-500 hover:text-zinc-200 hover:bg-white/[0.06]"
+                    }`}
+                    aria-label={item.title}
+                  >
+                    <Icon className="size-4" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="right"
+                  className="bg-[#1f232c] text-white border-white/10 text-xs"
+                >
+                  {item.title}
+                </TooltipContent>
+              </Tooltip>
+            );
+          })}
+        </div>
+      </aside>
+    </TooltipProvider>
   );
 }
