@@ -20,6 +20,7 @@ export default defineConfig({
         'src/components/layouts/**',
         'src/components/shared/**',
         'src/components/dashboard/**',
+        'src/components/history/**',
         'src/hooks/**',
         'src/proxy.ts',
         'src/env.ts',

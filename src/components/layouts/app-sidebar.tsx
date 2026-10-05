@@ -4,18 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutGrid,
-  Cpu,
-  Droplets,
-  Map as MapIcon,
+  History,
   CalendarClock,
-  Workflow,
-  BarChart3,
   Users,
   Settings,
   HelpCircle,
   PanelLeftClose,
   PanelLeftOpen,
-  Sprout,
 } from "lucide-react";
 import {
   Sidebar,
@@ -30,6 +25,7 @@ import {
 } from "@/components/ui/sidebar";
 import { NavGroup } from "@/components/layouts/nav-group";
 import type { SidebarNavGroup } from "@/components/layouts/nav-config";
+import Image from "next/image";
 
 interface AppSidebarProps {
   userName?: string;
@@ -55,35 +51,10 @@ export function AppSidebar({}: AppSidebarProps = {}) {
           isActive: isRouteActive("dashboard"),
         },
         {
-          title: "Field Map",
-          path: "/dashboard",
-          icon: <MapIcon />,
-        },
-      ],
-    },
-    {
-      label: "Monitoring",
-      items: [
-        {
-          title: "Devices",
-          path: "/dashboard",
-          icon: <Cpu />,
-          subItems: [
-            { title: "Sensors", path: "/dashboard" },
-            { title: "Controllers", path: "/dashboard" },
-            { title: "Pumps & Valves", path: "/dashboard" },
-          ],
-        },
-        {
-          title: "Watering",
-          path: "/dashboard",
-          icon: <Droplets />,
-          badge: "6",
-        },
-        {
-          title: "Analytics",
-          path: "/dashboard",
-          icon: <BarChart3 />,
+          title: "History",
+          path: "/history",
+          icon: <History />,
+          isActive: pathname === "/history",
         },
       ],
     },
@@ -94,12 +65,7 @@ export function AppSidebar({}: AppSidebarProps = {}) {
           title: "Schedules",
           path: "/dashboard",
           icon: <CalendarClock />,
-        },
-        {
-          title: "Rules",
-          path: "/dashboard",
-          icon: <Workflow />,
-        },
+        }
       ],
     },
     {
@@ -142,8 +108,8 @@ export function AppSidebar({}: AppSidebarProps = {}) {
               className="hover:bg-transparent active:bg-transparent"
             >
               <Link href="/dashboard">
-                <div className="flex aspect-square size-8 shrink-0 items-center justify-center rounded-xl border border-sidebar-border bg-sidebar-accent text-amber-400 shadow-inner">
-                  <Sprout className="size-4!" />
+                <div className="flex aspect-square size-8 shrink-0 items-center justify-center">
+                  <Image src="/logo_water.svg" width={24} height={24} alt="Logo" />
                 </div>
                 <div className="grid flex-1 text-left leading-tight">
                   <span className="truncate text-sm font-semibold text-sidebar-accent-foreground">

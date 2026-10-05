@@ -1,7 +1,6 @@
 "use client";
 
-import { Bell, Droplets, Layers, Zap, Gauge, Activity, Search } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,22 +14,6 @@ interface AppHeaderProps {
   userEmail?: string;
   userRole?: string;
 }
-
-type HeaderMetric = {
-  label: string;
-  value: string;
-  icon: LucideIcon;
-  live?: boolean;
-};
-
-// TODO: replace with live telemetry from TanStack Query
-const HEADER_METRICS: HeaderMetric[] = [
-  { label: "Active", value: "6/10", icon: Droplets, live: true },
-  { label: "Zones", value: "6/8", icon: Layers },
-  { label: "Pumps", value: "5", icon: Zap },
-  { label: "Avg. Moisture", value: "56.2%", icon: Gauge },
-  { label: "Flow", value: "94.2%", icon: Activity },
-];
 
 export function AppHeader({
   userName = "User",
@@ -50,26 +33,6 @@ export function AppHeader({
           orientation="vertical"
           className="mr-1 h-4 data-[orientation=vertical]:self-center"
         />
-        <div className="no-scrollbar hidden min-w-0 items-center gap-2 overflow-x-auto lg:flex">
-          {HEADER_METRICS.map(({ label, value, icon: Icon, live }) => (
-            <Badge
-              key={label}
-              variant="outline"
-              className="h-8 gap-1.5 rounded-full bg-card px-3 text-xs font-normal"
-            >
-              {live ? (
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-                </span>
-              ) : (
-                <Icon className="text-muted-foreground" />
-              )}
-              <span className="text-muted-foreground">{label}:</span>
-              <span className="font-semibold text-foreground">{value}</span>
-            </Badge>
-          ))}
-        </div>
         <span className="text-sm font-medium lg:hidden">Dashboard</span>
       </div>
 
@@ -102,7 +65,11 @@ export function AppHeader({
           </Badge>
         </Button>
 
-        <NavUser userName={userName} userEmail={userEmail} userRole={userRole} />
+        <NavUser
+          userName={userName}
+          userEmail={userEmail}
+          userRole={userRole}
+        />
       </div>
     </header>
   );
